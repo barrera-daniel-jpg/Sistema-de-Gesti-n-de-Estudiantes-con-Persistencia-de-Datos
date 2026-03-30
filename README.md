@@ -17,6 +17,9 @@ This is accompanied by different functions, which allows for greater fluency in 
 # Example of use:
 <img width="1182" height="873" alt="image" src="https://github.com/user-attachments/assets/040ffd79-57eb-407a-b686-27c8bac991d0" />
 
+# Video route:
+>> (# Cohorte5@rwadmin-90533010005:~/Escritorio/Daniel_Barrera_Julio/Prueba_python/Grabaciones de la pantalla)
+
 
 
 
