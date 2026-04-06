@@ -54,9 +54,11 @@ def buscar_esutidante(): #Funcion para buscar la informacion del estudiante en p
             for ls in base:
                 if ls["ID"] == buscar:
                     registro = True
+                    Estudiante = (f"| Nombre: {ls["Nombre"]} | ID: {ls["ID"]} | Edad: {ls["Edad"]} | Curso: {ls["Curso"]} | Estado: {ls["Estado"]}")
                     print("="*35)
-                    print(f"| Nombre: {ls["Nombre"]} | ID: {ls["ID"]} | Edad: {ls["Edad"]} | Curso: {ls["Curso"]} | Estado: {ls["Estado"]}")
+                    print (Estudiante)
                     print("="*35)
+                    
                     
                     buscar_otro = input(">> Desea buscar otro estudiante? (Y/N): ").upper()
                     # Condicion que nos permite buscar otro estudiante si el usuario lo requiere
@@ -71,6 +73,8 @@ def buscar_esutidante(): #Funcion para buscar la informacion del estudiante en p
                 
         except ValueError:
             print ("| Dato errado, vuelva a intentarlo")
+            
+            return Estudiante
 
 
 def actualziar_datos(): #Funcion encarga de actualizar datos puntual del estudiante
@@ -143,17 +147,20 @@ def eliminar(): #Funcion de eliminar toda la informacion de un estudiante
     de eliminar al estudiante de la base de datos, y sino es le caso, el progrma vuelve al menu de inicio.
     """
     buscar = int(input(">> Ingrese el ID del estudiante: "))
-    confirmacion = input(f"Seguro que desea eliminar al estudiante con el ID: {buscar}: Y/N?: ").upper()
-    if confirmacion == "Y":
-        eliminar = False
-        for ls in base:
-            if ls["ID"] == eliminar:
-                base.remove(ls)
-                print("Estudiante eliminado")
-                eliminar = True
-                break
-        if not eliminar:
-            print("Estudiante no encontrado")
-    else:
-        print("Accion cancelada")
-
+    
+    for ls in base:
+        if buscar == ls["ID"]:
+            confirmacion = input(f">> Seguro que desea eliminar al estudiante con el ID: {buscar}: Y/N?: ").upper()
+            if confirmacion == "Y":
+                for ls in base:
+                    ls["ID"] 
+                    base.remove(ls)
+                    print("\n>> Estudiante eliminado")
+            else:
+                print("\n>> Accion cancelada")
+        else:
+            print("\n>> Estudiante no encontrado")
+            
+    
+    
+    
