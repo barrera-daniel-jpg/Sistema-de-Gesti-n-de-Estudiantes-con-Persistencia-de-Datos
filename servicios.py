@@ -31,7 +31,7 @@ def registrar(): #Funcion de registar un nuevo estudiante
             edad = int(input("| Ingrese la edad del estudiante: "))
             curso = input("| Ingrese el curso donde esta el estudainte: ").strip().capitalize()
             estado = input("| Ingrese el estado en el que se encuentra el estudiante: ").strip().capitalize()
-            print("\n")
+            print("\n>> Estudiante registrado con exito")
             datos_estudiante = ({"Nombre":nombre, "ID": id, "Edad": edad, "Curso": curso, "Estado": estado})
             # Retorna el diccionario con los datos del estudiante
             return datos_estudiante
@@ -53,23 +53,20 @@ def buscar_esutidante(): #Funcion para buscar la informacion del estudiante en p
         
             for ls in base:
                 if ls["ID"] == buscar:
-                    registro = True
-                    Estudiante = (f"| Nombre: {ls["Nombre"]} | ID: {ls["ID"]} | Edad: {ls["Edad"]} | Curso: {ls["Curso"]} | Estado: {ls["Estado"]}")
+                    Estudiante = (f"\n| Nombre: {ls["Nombre"]} | ID: {ls["ID"]} | Edad: {ls["Edad"]} | Curso: {ls["Curso"]} | Estado: {ls["Estado"]}")
+                    print(Estudiante)
                     print("="*35)
-                    print (Estudiante)
-                    print("="*35)
-                    
-                    
-                    buscar_otro = input(">> Desea buscar otro estudiante? (Y/N): ").upper()
-                    # Condicion que nos permite buscar otro estudiante si el usuario lo requiere
-                    if buscar == "Y":
-                        return buscar_esutidante
-                    else:
-                        validar = 1     
                 else:
+                    validar = 1
                     print("="*35)
                     print("| El estudiante no esta registrado")
-                    validar = 1   
+                    
+            buscar_otro = input(">> Desea buscar otro estudiante? (Y/N): ").upper()
+            # Condicion que nos permite buscar otro estudiante si el usuario lo requiere
+            if buscar_otro == "Y":
+                buscar_esutidante()
+            else:
+                validar = 1       
                 
         except ValueError:
             print ("| Dato errado, vuelva a intentarlo")
@@ -84,61 +81,48 @@ def actualziar_datos(): #Funcion encarga de actualizar datos puntual del estudia
     no esta en la base de datos o dado caso hubo un erro al digitar el id el sistema lanza un mensaje de error retornado al menu.
     """
 
+    try:
+        buscar = int(input("\n| Ingrese el ID del estudiante: "))
+        encontrado = False
 
-    validar = 0
-    while validar != 1:
-        try:
-            buscar = int(input("\n| Ingrese el ID del estudiante: "))
-            for ls in base:
-                if ls["ID"] == buscar:
-                    registro = True
-                    print("="*35)
-                    print(f"| Nombre: {ls["Nombre"]} | ID: {ls["ID"]} | Edad: {ls["Edad"]} | Curso: {ls["Curso"]} | Estado: {ls["Estado"]}")
+        for ls in base:
+            if ls["ID"] == buscar:
+                encontrado = True
+                print("="*35)
+                print(f"| Nombre: {ls['Nombre']} | ID: {ls['ID']} | Edad: {ls['Edad']} | Curso: {ls['Curso']} | Estado: {ls['Estado']}")
+                
+                salir = False
+                while not salir:              
                     print("="*35)
                     print("Que desea actualizar?")
                     print("1.Nombre")
                     print("2.Edad")
                     print("3.Curso")
                     print("4.Estado")
+                    print("5.Salir")
+                    actualizar = int(input(">> Seleccione una opcion: "))
 
-                    valid_sub = False
-                    while not valid_sub:
-                        try:
-                            actualizar = int(input(">> Select an option: "))
-                            if 1 <= actualizar <= 4:
-                                valid_sub = True
-                            else:
-                                print("Invalid option, enter 1, 2, 3 or 4.")
-                        except ValueError:
-                            print("Invalid input. Enter a number.")
+                    if actualizar == 1:
+                        ls["Nombre"] = input("| Nuevo nombre: ").capitalize()
+                    elif actualizar == 2:
+                        ls["Edad"] = int(input("| Nueva edad: "))
+                    elif actualizar == 3:
+                        ls["Curso"] = input("| Nuevo curso: ").capitalize()
+                    elif actualizar == 4:
+                        ls["Estado"] = input("| Nuevo estado: ").capitalize()
+                    elif actualizar == 5:
+                        salir = True          
+                        print("\n>> Estudiante actualizado")
+                    else:
+                        print("| Opcion no valida")  
+                break  
 
-                        #Actualiza las variables por unas nuevas, que seran alojadas en la base de datos
-                            if actualizar == 1:
-                                new_name = input(" Nuevo nombre: ").capitalize().strip()
-                                ls["Name"] = new_name
+        if not encontrado:                    
+            print("="*35)
+            print(">> El estudiante no esta registrado")
 
-                            elif actualizar == 2:
-                                new_edad = int(input("| Nuevo edad: "))
-                                ls["Edad"] = new_edad
-
-                            elif actualizar == 3:
-                                new_curso = int(input("| Nuevo curso: "))
-                                ls["Curso"] = new_curso
-
-                            elif actualizar == 4:
-                                new_estado =input("| Nuevo estado")
-                                ls["Estado"] = new_estado
-
-                            print ("| Estudiante actualizado")
-                            break
-                else:
-                    print("="*35)
-                    print("| El estudiante no esta registrado")
-                    validar = 1  
-
-            
-        except ValueError:
-            print ("| Dato errado, vuelva a intentarlo")
+    except ValueError:
+        print("| Dato errado, vuelva a intentarlo")
 
 def eliminar(): #Funcion de eliminar toda la informacion de un estudiante
     """
